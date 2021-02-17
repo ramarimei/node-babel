@@ -22,6 +22,12 @@ server.get('/api/marketplaces', async (req, res) => {
     }
 });
 
+// server.post('/api/marketplaces', )
+
+server.use('*', (req,res) =>{
+    return res.status(404).json({error: 'Route not found' });
+});
+
 server.listen(PORT, () => {
     console.log(`server is listening`);
 });
