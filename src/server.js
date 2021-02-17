@@ -23,13 +23,17 @@ server.get('/api/marketplaces', async (req, res) => {
 
 server.post('/api/marketplaces', async (req, res) => {
   try {
-      // check the request body exists
         const { body } = req;
         console.log(body);
-        
-
+       
       // check the body properties - name, description, owner
-            
+      console.log(body.hasOwnProperty('name'))
+      if(body.hasOwnProperty('name')) {
+
+      } else {
+          return res.status(400).json({ error: 'Marketplace name, description, owner required' });
+      }
+      
       // use the model to create a new marketplace
 
       // save the marketplace
@@ -43,9 +47,9 @@ return res.end();
   }
 });
 
-// server.use('*', (req, res) => {
-//     return res.status(404).json({error: 'Route not found'});
-// });
+server.use('*', (req, res) => {
+    return res.status(404).json({error: 'Route not found'});
+});
 
 server.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`);
