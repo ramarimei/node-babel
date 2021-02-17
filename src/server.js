@@ -1,19 +1,21 @@
 import express from 'express';
 import { connect } from './database'
-import Books from './models/bookModel';
+import Marketplaces from './models/marketplaceModel';
 
 connect();
 
+const PORT = 5000;
 const server = express();
 
-const PORT = 5000;
+server.use(express.json());
 
-server.get('/books', async (req, res) => {
+
+server.get('/api/marketplaces', async (req, res) => {
     try {
-        const books = await Books.find({});
-        console.log(books); // should be an array of objects
+        const marketplaces = await Marketplaces.find({});
+        console.log(marketplaces); // should be an array of objects
 
-        return res.json(books);
+        return res.json(marketplaces);
     } catch (e) {
         console.error(e);
         return res.status(500).send(e);
