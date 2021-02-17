@@ -22,7 +22,25 @@ server.get('/api/marketplaces', async (req, res) => {
     }
 });
 
-// server.post('/api/marketplaces', )
+server.post('/api/marketplaces', async (req, res) => {
+    try {
+       // check the request body exists
+       const { body } = req;
+        console.log(body);
+       //check the body properties - name, description, owner
+
+       // use the model to create a new marketplace
+
+       //save the marketplace
+
+       //return 200 status and success message
+        return res.end();
+
+    } catch (error) {
+       console.error(e);
+       return res.status(500).send(e); 
+    }
+});
 
 server.use('*', (req,res) =>{
     return res.status(404).json({error: 'Route not found' });
