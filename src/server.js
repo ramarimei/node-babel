@@ -28,7 +28,7 @@ server.post('/api/marketplaces', async (req, res) => {
        const { body } = req;
         console.log(body);
        //check the body properties - name, description, owner
-        RRRRRRRR
+        
        // use the model to create a new marketplace
 
        //save the marketplace
