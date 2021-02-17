@@ -7,7 +7,7 @@ A node.js and babel template repo.
 Get a MongoDB instance running in a container with dummy data.
 
 ```shell
-docker run -d -p 27017:27017 --name node-babel-mongo \
+docker run -d -p 27017:27017 --name node-babel-mongo-ramari \
   -v "$(pwd)/data:/docker-entrypoint-initdb.d" \
   mongo
 ```
