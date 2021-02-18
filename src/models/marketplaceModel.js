@@ -5,7 +5,7 @@ const model = new Schema({
     name: {type: String, required: true, unique: true},
 	description: {type: String, required: true},
 	owner: {type: String, required: true},
-    admin:[ String ]
+    admins:[ String ]
 
 });
 
