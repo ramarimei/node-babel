@@ -24,7 +24,6 @@ server.get('/api/marketplaces', async (req, res) => {
 server.post('/api/marketplaces', async (req, res) => {
   try {
     const { body } = req;
-    // console.log(body);
 
     // check the body properties - name, description, owner
     if (
@@ -36,11 +35,9 @@ server.post('/api/marketplaces', async (req, res) => {
         .status(400)
         .json({ error: 'Marketplace name, description, owner required' });
     }
-
     // check if the marketplace already exists
     const marketplaceExists = await Marketplaces.findOne({ name: body.name });
     // console.log(marketplaceExists);
-
     if (marketplaceExists != null) {
       return res.status(400).json({ error: 'Marketplace name already in use' });
     }
@@ -62,7 +59,6 @@ server.post('/api/marketplaces', async (req, res) => {
   }
 });
 //Update route
-
 server.put('/api/marketplaces/:id', async (req, res) => {
   try {
     const { body } = req;
@@ -84,10 +80,15 @@ server.put('/api/marketplaces/:id', async (req, res) => {
         .json({ error: 'Marketplace name, description, owner required' });
     }
 
-    const marketplaceExists = await Marketplaces.findByIdAndUpdate(id, body);
-    console.log(marketplaceExists);
+    const marketplace = await Marketplaces.findByIdAndUpdate(id, body, { new: true}).lean();
+    delete marketplace.__v;
 
-    return res.end();
+    console.log(marketplace);
+
+    return res.status(200).json({
+        success: true,
+        data: marketplace
+    });
 
   } catch (e) {
     console.error(e);
