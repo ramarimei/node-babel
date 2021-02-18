@@ -100,23 +100,28 @@ server.put('/api/marketplaces/:id', async (req, res) => {
   }
 });
 
-//Delete 
+//Delete // do we use splice?
 
 server.delete('/api/marketplaces/:id', async (req, res) => {
 try {
-    const marketplacesID = getID(req.params.id);
-    if( marketplacesID === -1) return res.status(404).json({})
+    const marketplace = await Marketplaces.findByIdAndDelete(id); 
+   delete marketplace.id;
+
+   console.log(marketplace);
 
     marketplaces.splice(marketplacesID, 1)
     res.json(marketplacesID)
-    
-} catch (e) {
-    
-}
-// const marketplace = await Marketplaces.findById(id);
-// delete marketplace;
 
-// console.log(marketplace);
+    return res.status(200).json({
+        success: true,
+        data: marketplace
+    });
+
+} catch (e) {
+    console.error(e);
+}
+
+
 
 });
 
