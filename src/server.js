@@ -27,13 +27,14 @@ server.post('/api/marketplaces', async (req, res) => {
         console.log(body);
        
       // check the body properties - name, description, owner
-      console.log(body.hasOwnProperty('name'))
-      if(body.hasOwnProperty('name')) {
-
-      } else {
-          return res.status(400).json({ error: 'Marketplace name, description, owner required' });
-      }
       
+      if(
+        !body.hasOwnProperty('name') || 
+        !body.hadOwnProperty('description')||
+        !body.hadOwnProperty('owner')||
+       ) {   
+      return res.status(400).json({ error: 'Marketplace name, description, owner required' });
+      }
       // use the model to create a new marketplace
 
       // save the marketplace
