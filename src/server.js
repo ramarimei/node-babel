@@ -60,6 +60,8 @@ server.post('/api/marketplaces', async (req, res) => {
     return res.status(500).send(e);
   }
 });
+//Update route
+
 
 server.use('*', (req, res) => {
   return res.status(404).json({ error: 'Route not found' });
