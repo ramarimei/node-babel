@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 import { connect } from './database';
 import marketplacesRouter from './routers/marketplacesRouter';
 // import Marketplaces from './models/marketplaceModel';
@@ -9,6 +10,7 @@ const PORT = 5000;
 const server = express();
 
 server.use(express.json());
+server.use(morgan('dev'));
 server.use('/api',marketplacesRouter);
 server.use('/api/marketplaces', marketplacesRouter)
 
