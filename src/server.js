@@ -9,6 +9,8 @@ const server = express();
 
 server.use(express.json());
 
+
+
 server.get('/api/marketplaces', async (req, res) => {
   try {
     const marketplaces = await Marketplaces.find({});
