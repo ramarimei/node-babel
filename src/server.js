@@ -102,19 +102,16 @@ server.put('/api/marketplaces/:id', async (req, res) => {
 
 //Delete // do we use splice?
 server.delete('/api/marketplaces/:id', async (req, res) => {
-    const deleteMarketplacesID = req.params.id;
-    console.log(`req.params.id: ${req.params.id}`);
-    
-    try {
-        const response = await Marketplaces.findByIdAndDelete(id);
-        res.status(200).json({
-            success: true, 
-            data: marketplace
-        });
+try {
+    const { id } = req.params;
 
-    } catch (e) {
-        res.json({message:err, app: marketplace});
-    }
+    await Marketplaces.findByIdAndDelete(id);
+
+    return res.json({ success: true });
+} catch (e) {
+    console.error(e);
+    return res.status(500).send(e);
+}
 });
 
 server.use('*', (req, res) => {
