@@ -98,7 +98,7 @@ router.get('/', async (req, res) => {
     }
   });
   
-  //Delete // do we use splice?
+  //Delete 
   router.delete('/:id', async (req, res) => {
   try {
       const { id } = req.params;
