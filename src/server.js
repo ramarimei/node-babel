@@ -1,6 +1,8 @@
 import express from 'express';
 import { connect } from './database';
 import marketplacesRouter from './routers/marketplacesRouter';
+import errorHandler from './middleware/errorHandler';
+
 // import Marketplaces from './models/marketplaceModel';
 
 connect();
@@ -15,6 +17,7 @@ server.use('/api/marketplaces', marketplacesRouter)
 server.use('*', (req, res) => {
   return res.status(404).json({ error: 'Route not found' });
 });
+server.use(errorHandler);
 
 server.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`);
