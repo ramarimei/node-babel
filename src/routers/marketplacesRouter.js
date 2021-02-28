@@ -1,5 +1,3 @@
-
-
 const marketPlaceRouter = (Router, Marketplaces) => {
 const router = Router();
 
