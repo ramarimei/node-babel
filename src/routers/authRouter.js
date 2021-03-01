@@ -8,7 +8,38 @@ router.post('/register', async (req, res, next) => {
         const { body } = req;
         console.log(body); 
 
-    return res.end();
+        //check if the user has a firstname, lastname, username, password and email
+    if (
+        // !body.hasOwnProperty('firstname') ||
+        // !body.hasOwnProperty('lastname') ||
+        !body.hasOwnProperty('username') ||
+        !body.hasOwnProperty('password') ||
+        !body.hasOwnProperty('email') 
+
+     ) {
+        return res.status(400).json({ 
+            error: 'all fields have to be filled out, username, email and password' 
+        });
+    }
+
+    const { username, email, password} = body;
+    //check username is unique
+    const checkUsername = await User.findOne({ username });
+    if (checkUsername) {
+        return res.status(400).json({error: 'Username already taken!'});
+    }
+
+    //check username is unique
+    const checkEmail = await User.findOne({ email });
+    if (checkEmail) {
+        return res.status(400).json({error: 'Email address already in use!'});
+    }
+    // use the model to create a new user
+    const user = new User(body);
+    // save the marketplace
+    await user.save();
+
+    return res.status(201).json({ success: true });
     } catch (e) {
       next(e);  
     }
