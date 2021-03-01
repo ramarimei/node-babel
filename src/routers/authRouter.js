@@ -35,8 +35,10 @@ router.post('/register', async (req, res, next) => {
     if (checkEmail) {
         return res.status(400).json({error: 'Email address already in use!'});
     }
+
+    const hash =  await argon2.hash(password);
     // use the model to create a new user
-    const user = new User(body);
+    const user = new User({...body, password: hash});
     // save the marketplace
     await user.save();
 
