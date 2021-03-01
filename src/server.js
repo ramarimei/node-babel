@@ -4,6 +4,7 @@ import { connect } from './database';
 import marketplacesRouter from './routers/marketplacesRouter';
 import errorHandler from './middleware/errorHandler';
 import Marketplaces from './models/marketplaceModel';
+import authMiddleware from './middleware/authMiddleware';
 
 connect();
 
