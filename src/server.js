@@ -1,11 +1,11 @@
 import express, { Router } from 'express';
 import morgan from 'morgan';
-import { connect } from './database';
-import authRouter from './routers/authRouter';
-import marketplacesRouter from './routers/marketplacesRouter';
-import errorHandler from './middleware/errorHandler';
-import Marketplaces from './models/marketplaceModel';
-import authMiddleware from './middleware/authMiddleware';
+import { connect } from './database.js';
+import authRouter from './routers/authRouter.js';
+import marketplacesRouter from './routers/marketplacesRouter.js';
+import errorHandler from './middleware/errorHandler.js';
+import Marketplaces from './models/marketplaceModel.js';
+import authMiddleware from './middleware/authMiddleware.js';
 
 connect();
 

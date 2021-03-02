@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import argon2 from 'argon2';
-import User from '../models/usersModel';
+import User from '../models/usersModel.js';
+import registerSchema from '../validation/authRegisterUser.js';
 
 const router = Router();
 
 router.post('/register', async (req, res, next) => {
     try {
         const { body } = req;
-        console.log(body); 
+        // console.log(body); 
 
         //check if the user has a firstname, lastname, username, password and email
     if (
@@ -23,24 +24,27 @@ router.post('/register', async (req, res, next) => {
         });
     }
 
-    const { username, email, password} = body;
-    //check username is unique
-    const checkUsername = await User.findOne({ username });
-    if (checkUsername) {
-        return res.status(400).json({error: 'Username already taken!'});
-    }
+    // const { username, email, password} = body;
 
+    const validValue = await schema.validateAsync({body});
+    console.log('validValue:', validValues);
     //check username is unique
-    const checkEmail = await User.findOne({ email });
-    if (checkEmail) {
-        return res.status(400).json({error: 'Email address already in use!'});
-    }
+    // const checkUsername = await User.findOne({ username });
+    // if (checkUsername) {
+    //     return res.status(400).json({error: 'Username already taken!'});
+    // }
 
-    const hash =  await argon2.hash(password);
-    // use the model to create a new user
-    const user = new User({...body, password: hash});
-    // save the marketplace
-    await user.save();
+    // //check username is unique
+    // const checkEmail = await User.findOne({ email });
+    // if (checkEmail) {
+    //     return res.status(400).json({error: 'Email address already in use!'});
+    // }
+
+    // const hash =  await argon2.hash(password);
+    // // use the model to create a new user
+    // const user = new User({...body, password: hash});
+    // // save the marketplace
+    // await user.save();
 
     return res.status(201).json({ success: true });
     } catch (e) {
