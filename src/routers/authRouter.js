@@ -26,8 +26,8 @@ router.post('/register', async (req, res, next) => {
 
     // const { username, email, password} = body;
 
-    const validValue = await schema.validateAsync({body});
-    console.log('validValue:', validValues);
+    const validValue = await registerSchema.validateAsync({body});
+    console.log('validValues:', validValues);
     //check username is unique
     // const checkUsername = await User.findOne({ username });
     // if (checkUsername) {
