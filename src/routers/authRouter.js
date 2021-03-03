@@ -8,58 +8,37 @@ console.log(router);
 
 router.post('/register', async (req, res, next) => {
     try {
-        const { body } = req;
-        // console.log(body); 
-
-        //check if the user has a firstname, lastname, username, password and email
-    if (
-        // !body.hasOwnProperty('firstname') ||
-        // !body.hasOwnProperty('lastname') ||
-        !body.hasOwnProperty('username') ||
-        !body.hasOwnProperty('password') ||
-        !body.hasOwnProperty('email') 
-
-     ) {
-        return res.status(400).json({ 
-            error: 'all fields have to be filled out, username, email and password' 
-        });
-    }
-
-    // const { username, email, password} = body;
-
+    const { body } = req;
     const validValues = await registerSchema.validateAsync(body);
     console.log('validValues:', validValues);
+
+    const { username, email, password} = validValues;
+
+    // check username is unique
+    const checkUsername = await User.findOne({ username });
+    if (checkUsername) {
+        return res.status(400).json({error: 'Username already taken!'});
+    }
+
     //check username is unique
-    // const checkUsername = await User.findOne({ username });
-    // if (checkUsername) {
-    //     return res.status(400).json({error: 'Username already taken!'});
-    // }
+    const checkEmail = await User.findOne({ email });
+    if (checkEmail) {
+        return res.status(400).json({error: 'Email address already in use!'});
+    }
 
-    // //check username is unique
-    // const checkEmail = await User.findOne({ email });
-    // if (checkEmail) {
-    //     return res.status(400).json({error: 'Email address already in use!'});
-    // }
-
-    // const hash =  await argon2.hash(password);
-    // // use the model to create a new user
-    // const user = new User({...body, password: hash});
-    // // save the marketplace
-    // await user.save();
+    const hash =  await argon2.hash(password);
+    // use the model to create a new user
+    const user = new User({...body, password: hash});
+    // save the marketplace
+    await user.save();
 
     return res.status(201).json({ success: true });
     } catch (e) {
-
-    if(e.message == 'Invalid password!'){
-        return res.status(400).json({ error: e.message });
-    }
-    if(e.message == 'Invalid username must be between 3 and 50 characters'){
-        return res.status(400).json({ error: e.message });
-    }
-
-    if(e.message == 'Invalid email'){
-        return res.status(400).json({ error: e.message });
-    }    
+// catch custom validation errors
+        if(e.message.startsWith('Invalid')){
+            return res.status(400).json({ error: e.message });
+        }
+ 
       next(e);  
     }
 });
