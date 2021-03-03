@@ -2,7 +2,7 @@ import { Router } from 'express';
 import argon2 from 'argon2';
 import User from '../models/usersModel.js';
 import registerSchema from '../validation/authRegisterUser.js';
-import loginSchema from '../validation/authLoginUser';
+import authLoginSchema from '../validation/authLoginUser.js';
 
 const router = Router();
 console.log(router);
@@ -48,7 +48,7 @@ router.post('/register', async (req, res, next) => {
     try {
         // login with username
         const { body } = req;
-        const validValues = await loginSchema.validateAsync(body);
+        const validValues = await authLoginSchema.validateAsync(body);
         console.log('validValues:', validValues);
     
         const { username, email, password} = validValues;

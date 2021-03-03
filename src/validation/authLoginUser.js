@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const loginSchema = Joi.object({
+const authLoginSchema = Joi.object({
     username: Joi.string()
         .alphanum()
         .min(3)
@@ -15,5 +15,5 @@ const loginSchema = Joi.object({
 
 });
 
-export default loginSchema;  
+export default authLoginSchema;  
     
