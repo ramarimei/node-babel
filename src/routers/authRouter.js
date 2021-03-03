@@ -47,7 +47,7 @@ router.post('/register', async (req, res, next) => {
  router.post('/login', async (req, res, next) => {
     try {
         // login with username
-        const { body } = req,
+        const { body } = req;
         const validValues = await loginSchema.validateAsync(body);
         console.log('validValues:', validValues);
     
@@ -61,7 +61,7 @@ router.post('/register', async (req, res, next) => {
         if(e.message.startsWith('Invalid')){
             return res.status(400).json({ error: e.message });
         }
-        
+
         next(e);
     }
 
