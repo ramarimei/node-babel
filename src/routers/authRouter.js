@@ -27,7 +27,7 @@ router.post('/register', async (req, res, next) => {
 
     // const { username, email, password} = body;
 
-    const validValue = await registerSchema.validateAsync(body);
+    const validValues = await registerSchema.validateAsync(body);
     console.log('validValues:', validValues);
     //check username is unique
     // const checkUsername = await User.findOne({ username });
@@ -49,6 +49,14 @@ router.post('/register', async (req, res, next) => {
 
     return res.status(201).json({ success: true });
     } catch (e) {
+
+    if(e.message == 'Invalid password!'){
+        return res.status(400).json({ error: e.message });
+    }
+    if(e.message == 'Invalid username - must be between 3 and 50 characters.'){
+        return res.status(400).json({ error: e.message });
+    }
+
       next(e);  
     }
 });
