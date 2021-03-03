@@ -9,11 +9,12 @@ const registerSchema = Joi.object({
 
     password: Joi.string()
         .pattern(new RegExp('^[a-zA-Z0-9]{6,64}$'))
-        .required(),
+        .required()
+        .error(new Error('Invalid password')),
 
     email: Joi.string()
         .email({ minDomainSegments: 2})
-        .required()
+        .required(),
 });
 
 export default registerSchema;  
