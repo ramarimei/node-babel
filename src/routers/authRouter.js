@@ -2,6 +2,7 @@ import { Router } from 'express';
 import argon2 from 'argon2';
 import User from '../models/usersModel.js';
 import registerSchema from '../validation/authRegisterUser.js';
+import loginSchema from '../validation/authLoginUser';
 
 const router = Router();
 console.log(router);
@@ -42,5 +43,28 @@ router.post('/register', async (req, res, next) => {
       next(e);  
     }
 });
+
+ router.post('/login', async (req, res, next) => {
+    try {
+        // login with username
+        const { body } = req,
+        const validValues = await loginSchema.validateAsync(body);
+        console.log('validValues:', validValues);
+    
+        const { username, email, password} = validValues;
+        
+
+        return res.end();
+    } catch (e) {
+
+        // catch custom validation errors
+        if(e.message.startsWith('Invalid')){
+            return res.status(400).json({ error: e.message });
+        }
+        
+        next(e);
+    }
+
+ });
 
 export default router;
