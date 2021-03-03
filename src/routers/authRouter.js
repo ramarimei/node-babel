@@ -53,10 +53,13 @@ router.post('/register', async (req, res, next) => {
     if(e.message == 'Invalid password!'){
         return res.status(400).json({ error: e.message });
     }
-    if(e.message == 'Invalid username - must be between 3 and 50 characters.'){
+    if(e.message == 'Invalid username must be between 3 and 50 characters'){
         return res.status(400).json({ error: e.message });
     }
 
+    if(e.message == 'Invalid email'){
+        return res.status(400).json({ error: e.message });
+    }    
       next(e);  
     }
 });

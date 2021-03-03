@@ -15,7 +15,8 @@ const registerSchema = Joi.object({
 
     email: Joi.string()
         .email({ minDomainSegments: 2})
-        .required(),
+        .required()
+        .error(new Error('Invalid email')),
 });
 
 export default registerSchema;  
