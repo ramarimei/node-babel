@@ -4,6 +4,7 @@ import User from '../models/usersModel.js';
 import registerSchema from '../validation/authRegisterUser.js';
 
 const router = Router();
+console.log(router);
 
 router.post('/register', async (req, res, next) => {
     try {

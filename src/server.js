@@ -15,7 +15,7 @@ const server = express();
 server.use(express.json());
 server.use(morgan('dev'));
 server.use('/auth',authRouter);
-server.use('/api',marketplacesRouter);
+// server.use('/api',marketplacesRouter);
 server.use('/api/marketplaces', marketplacesRouter(Router, Marketplaces));
 
 server.use('*', (req, res) => {
