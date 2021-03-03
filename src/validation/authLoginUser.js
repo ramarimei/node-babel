@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const registerSchema = Joi.object({
+const loginSchema = Joi.object({
     username: Joi.string()
         .alphanum()
         .min(3)
@@ -15,5 +15,5 @@ const registerSchema = Joi.object({
 
 });
 
-export default registerSchema;  
+export default loginSchema;  
     
