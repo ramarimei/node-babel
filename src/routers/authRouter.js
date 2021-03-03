@@ -29,7 +29,11 @@ router.post('/register', async (req, res, next) => {
 
     const hash =  await argon2.hash(password);
     // use the model to create a new user
-    const user = new User({...body, password: hash});
+    const user = new User({
+        ...body, 
+        usernameLowercase: username.tolowerCase(),
+        password: hash
+    });
     // save the marketplace
     await user.save();
 
@@ -51,10 +55,14 @@ router.post('/register', async (req, res, next) => {
         const validValues = await authLoginSchema.validateAsync(body);
         console.log('validValues:', validValues);
     
-        const { username, email, password} = validValues;
-        
+        const { username, password} = validValues;
 
-        return res.end();
+        //check username is unique
+        const checkUsername = await User.findOne({ username });
+        if (!Boolean(checkUsername)) {
+        return res.status(404).json({error: 'username not found!'});
+    }
+      return res.end();
     } catch (e) {
 
         // catch custom validation errors
