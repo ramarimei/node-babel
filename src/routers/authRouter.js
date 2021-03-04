@@ -31,7 +31,7 @@ router.post('/register', async (req, res, next) => {
     // use the model to create a new user
     const user = new User({
         ...body, 
-        usernameLowercase: username.tolowerCase(),
+        usernameLowercase: username.toLowerCase(),
         password: hash
     });
     // save the marketplace
@@ -58,10 +58,18 @@ router.post('/register', async (req, res, next) => {
         const { username, password} = validValues;
 
         //check username is unique
-        const checkUsername = await User.findOne({ username });
-        if (!Boolean(checkUsername)) {
+        const checkUser = await User.findOne({ usernameLowercase: username.toLowerCase()});
+        if (!Boolean(checkUser)) {
         return res.status(404).json({error: 'username not found!'});
     }
+
+        console.log(checkUser);
+        
+        if(await argon2.verify(checkUser.password, password)) {
+            console.log('password verified');
+        }
+
+
       return res.end();
     } catch (e) {
 
