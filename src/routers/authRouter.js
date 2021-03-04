@@ -65,8 +65,8 @@ router.post('/register', async (req, res, next) => {
 
         console.log(checkUser);
         
-        if(await argon2.verify(checkUser.password, password)) {
-            console.log('password verified');
+        if( !(await argon2.verify(checkUser.password, password))) {
+            return res.status(400).json({ error: 'Incorrect Password!'});
         }
 
 
