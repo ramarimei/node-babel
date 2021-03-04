@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import argon2 from 'argon2';
+import { v4 as uuidv4 } from 'uuid';
 import User from '../models/usersModel.js';
 import registerSchema from '../validation/authRegisterUser.js';
 import authLoginSchema from '../validation/authLoginUser.js';
@@ -69,8 +70,13 @@ router.post('/register', async (req, res, next) => {
             return res.status(400).json({ error: 'Incorrect Password!'});
         }
 
+        const token = uuidv4();
 
-      return res.end();
+
+      return res.status(200).json({
+          success: true,
+          token
+      });
     } catch (e) {
 
         // catch custom validation errors
