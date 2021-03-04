@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { token } from 'morgan';
 
 const { Schema } = mongoose;
 
@@ -9,7 +10,8 @@ const model = new Schema({
     usernameLowercase: {type: String, required: true, unique: true},
     password: {type: String, required: true, unique: true},
     email: {type: String, required: true},
-    groups: []
+    groups: [],
+    token: {type: String,unique: true },
  });
 
 export default mongoose.model('Users', model, 'users');

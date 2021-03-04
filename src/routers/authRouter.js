@@ -71,7 +71,8 @@ router.post('/register', async (req, res, next) => {
         }
 
         const token = uuidv4();
-
+        checkUser.token = token;
+        await checkUser.save();
 
       return res.status(200).json({
           success: true,
